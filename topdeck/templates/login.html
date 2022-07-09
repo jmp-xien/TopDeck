@@ -1,0 +1,51 @@
+{% extends 'basenom.html' %}
+{% block content %}
+            <!-- login -->
+            <section id="login" class="wrapper style1 fade-up">
+                <div class="inner">
+                    <h2>TopDeck System Access</h2>
+                    <p>Please Log-In To Access Container Admin Panel.</p>
+                    <div class="split style1">
+                        <section>
+                            <form method="post" action="">
+                                <div class="fields">
+                                    <div class="field half">
+                                        {{ form.username.label }}
+                                        {{ form.username(size=20) }}
+                                    </div>
+                                    <div class="field half">
+                                        {{ form.password.label }}
+                                        {{ form.password(size=20) }}
+                                    </div>
+                                </div>
+                                <ul class="actions">
+                                    <li>{{ form.submit }}</li>
+                                </ul>
+                            </form>
+                        </section>
+                        <section>
+                            <ul class="contact">
+                                <li>
+                                    <h2>TopDeck</h2>
+                                    <span>Welcome to TopDeck, a FreeBSD
+                                    Container Admin Panel. For access,
+                                    check included Readme document.<br />
+                                    GitHub: jmperez20</span>
+                                </li>
+                                <li>
+                                    <h3>Social</h3>
+                                    <ul class="icons">
+                                        <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                                        <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                                        <li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+                                        <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                                        <li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            </section>
+{% endblock %}
+

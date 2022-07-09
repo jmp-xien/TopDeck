@@ -1,0 +1,27 @@
+# Base Jail Container Configuration
+
+# Initialisation scripts
+exec.clean;
+ip4 = inherit;
+ip6 = inherit;
+
+allow.raw_sockets = 0;
+exec.system_user = "root";
+exec.jail_user = "root";
+exec.start += "/bin/sh /etc/rc";
+exec.stop = "/bin/sh /etc/rc.shutdown";
+exec.consolelog = "{{ log_dir }}/topdeck/${name}.log";
+mount.devfs;
+allow.mount;
+
+$cont_domain = "{{ domain }}";
+host.hostname = "${name}.${cont_domain}";
+path = "{{ root_dir }}/{{ cont_dir }}/${name}";
+$baseroot_path = "{{ root_dir }}/baseroot";
+$sysroot_path = "{{ root_dir }}/{{ cont_dir }}/${name}/sysroot";
+mount = "$baseroot_path $sysroot_path nullfs ro 0 0";
+
+# Start Of TopDeck Container Config
+# Jails
+
+

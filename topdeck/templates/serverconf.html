@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block content %}
+            <!-- serverconf -->
+            <section id="serverconf" class="wrapper style1 fullscreen fade-up">
+                <div class="inner">
+                    <h2>TopDeck Panel Host Configuration</h2>
+                    <p>CAUTION: <br>
+                        Incorrect setting option may cause Panel or Container services unusable.
+                        Ensure to know what config change does to Panel System or simply set default option.</p>
+                    <table>
+                    <thead>
+                        </thead>
+                    <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <td>{{ server.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>ServerName</th>
+                            <td>{{ server.hostname }}</td>
+                        </tr>
+                        <tr>
+                            <th>TopDeck Panel IP Address</th>
+                            <td>{{ server.daship }}</td>
+                        </tr>
+                        <tr>
+                            <th>TopDeck Panel Port</th>
+                            <td>{{ server.dashport }}</td>
+                        </tr>
+                        <tr>
+                            <th>Base Container Directory</th>
+                            <td>{{ server.basedir }}</td>
+                            <hl></hl>
+                        </tr>
+                        <tr>
+                            <th>TopDeck Log Directory</th>
+                            <td>{{ server.logdir }}</td>
+                        </tr>
+                        <tr>
+                            <th>Container Directory</th>
+                            <td>{{ server.contdir }}</td>
+                        </tr>
+                        <tr>
+                            <th>DNS Server IP Address</th>
+                            <td>{{ server.dnsip }}</td>
+                        </tr>
+                        <tr>
+                            <th>Container Domain</th>
+                            <td>{{ server.domain }}</td>
+                        </tr>
+                        <tr>
+                            <th>Edit Server Config</th>
+                            <td><a href="#openModal{{ server.id }}" class="button">Edit Server Config</a></td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+
+                        <tr></tr>
+                        <tr></tr>
+                        <tr></tr>
+                            <div id="openModal{{ server.id }}" class="modalDialog">
+                                <div>
+                                    <a href="#close" title="Close" class="close">X</a>
+                                    <form method="post" action="#close">
+                                        <div class="fields">
+                                            {{ form.sid(value=server.id) }}
+                                            <div class="field half">
+                                                {{ form.hostname.label }}
+                                                {{ form.hostname(value=server.hostname) }}
+                                                {{ form.daship.label }}
+                                                {{ form.daship(value=server.daship) }}
+                                                {{ form.dashport.label }}
+                                                {{ form.dashport(value=server.dashport) }}
+                                                {{ form.basedir.label }}
+                                                {{ form.basedir(value=server.basedir) }}
+                                                {{ form.logdir.label }}
+                                                {{ form.logdir(value=server.logdir) }}
+                                                {{ form.contdir.label }}
+                                                {{ form.contdir(value=server.contdir) }}
+                                                {{ form.dnsip.label }}
+                                                {{ form.dnsip(value=server.dnsip) }}
+                                                {{ form.domain.label }}
+                                                {{ form.domain(value=server.domain) }}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p></p>
+                                            <ul class="actions">
+                                                <li>
+                                                    {{ form.submit }} &nbsp;
+                                                    <a href="#close" class="button">Cancel</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                    </tbody>
+                    </table>
+                    <div class="features">
+                        <section>
+                            <span class="icon solid major fa-cog"></span>
+                            <h3>Update Options</h3>
+                            <p>.</p>
+                            <p>.</p>
+                            <p>.</p>
+                            <p>.</p>
+                        </section>
+                    </div>
+                </div>
+            </section>
+{% endblock %}

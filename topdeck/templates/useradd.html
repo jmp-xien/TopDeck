@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+        <!-- useradd -->
+        <section id="useradd" class="wrapper style1 fade-up">
+            <div class="inner">
+                <h2>Add User Access</h2>
+                <p>Please, fill-in each field.</p>
+                <div class="split style1">
+                    <section>
+                        <form method="post" action="">
+                            <div class="fields">
+                                <div class="field half">{{ form.username.label }} {{ form.username(size=20) }} </div>
+                                <div class="field half">{{ form.email.label }} {{ form.email(size=20) }} </div>
+                                <div class="field half">{{ form.password.label }} {{ form.password(size=20) }} </div>
+                                <div class="field half">{{ form.password_confirm.label }} {{ form.password_confirm(size=20) }} </div>
+                                {% for error in form.password.errors %}
+                                <span style="color:red;">
+                                    {{error}}
+                                </span>
+                                {% endfor %}
+                                <div class="field half">{{ form.admin.label }} {{ form.admin }} </div>
+                            </div>
+                            <ul class="actions">
+                                <li>{{ form.submit }}</li>
+                            </ul>
+                        </form>
+                    </section>
+                    <section>
+                        <ul class="contact">
+                            <li>
+                                <h3>Login ID</h3>
+                                <span>User ID to login</span>
+                            <li>
+                                <h3>Email</h3>
+                                <span>Email as account reference</span>
+                            </li>
+                            <li>
+                                <h3>Admin</h3>
+                                <span>Admin can create <br />
+                                users and restart the<br />
+                                TopDeck service</span>
+                            </li>
+                            <li>
+                                <h3>Social</h3>
+                                <ul class="icons">
+                                    <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                                    <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                                    <li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+                                    <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                                    <li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </section>
+{% endblock %}
+

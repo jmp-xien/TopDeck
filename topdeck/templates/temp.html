@@ -1,0 +1,19 @@
+<div id="delModal{{ h.id }}" class="modalDialog">
+    <div>
+        <a href="#close" title="Close" class="close">X</a>
+        <form method="post" action="#close">
+            <div class="fields">
+                {{ form.cid(value=h.id) }}
+                <div class="field half">
+                    <h3>Delete Contaner: Are you sure?</h3>
+                </div>                
+            </div><br>
+                <ul class="actions">
+                    <li>
+                        <a href="delete" class="button">Delete</a> &nbsp;
+                        <a href="#close" class="button submit">Cancel</a>
+                    </li>
+                </ul>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block content %}
+            <!-- contstate -->
+            <section id="contstate" class="wrapper style1 fullscreen fade-up">
+                <div class="inner">
+                    <h2>Manage Container State</h2>
+                    <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Container</th>
+                            <th>IP Address</th>
+                            <th>State</th>
+                            <th> &nbsp; &nbsp; Start</th>
+                            <th> &nbsp; &nbsp; Stop</th>
+                            <th> &nbsp; &nbsp; Restart</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for h in hosts %}
+                        <tr>
+                            <td><code>{{ h.id }}</code></td>
+                            <td>{{ h.hostname }}</td>
+                            <td>{{ h.ipaddress }}</td>
+                            <td>{{ h.state }}</td>
+                            <td><a href="#startModal{{ h.id }}" class="button submit">Start</a></td>
+                            <td><a href="#stopModal{{ h.id }}" class="button submit">Stop</a></td>
+                            <td><a href="#restartModal{{ h.id }}" class="button submit">Restart</a></td>
+                        </tr>
+                        <tr></tr>
+                        <tr></tr>
+                        <tr></tr>
+                        <tr>
+                            <div id="startModal{{ h.id }}" class="modalDialog">
+                                <div>
+                                    <a href="#close" title="Close" class="close">X</a>
+                                    <form method="post" action="#close">
+                                        <h3>Start Container: &nbsp; {{ h.hostname }}</h3>
+                                        <p>Are you sure?</p>
+                                        <ul class="actions">
+                                            <li>
+                                                {% if h.state == "running" %}
+                                                <h3 style="color:crimson;">ERROR: container state is: {{ h.state }}</h3>
+                                                {% else %}
+                                                <a href="statemod/start/{{ h.hostname }}" class="button">Start</a> &nbsp; &nbsp;
+                                                {% endif %}
+                                                <a href="#close" class="button">Cancel</a>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="stopModal{{ h.id }}" class="modalDialog">
+                                <div>
+                                    <a href="#close" title="Close" class="close">X</a>
+                                    <form method="post" action="#close">
+                                        <h3>Stop Container: &nbsp; {{ h.hostname }}</h3>
+                                        <p>Are you sure?</p>
+                                        <ul class="actions">
+                                            <li>
+                                                {% if h.state == "stopped" %}
+                                                <h3 style="color:crimson;">ERROR: container state is: {{ h.state }}</h3>
+                                                {% else %}
+                                                <a href="statemod/stop/{{ h.hostname }}" class="button">Stop</a> &nbsp;
+                                                {% endif %}
+                                                <a href="#close" class="button">Cancel</a>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="restartModal{{ h.id }}" class="modalDialog">
+                                <div>
+                                    <a href="#close" title="Close" class="close">X</a>
+                                    <form method="post" action="#close">
+                                        <h3>Restart Container: &nbsp; {{ h.hostname }}</h3>
+                                        <p>Are you sure?</p>
+                                        <ul class="actions">
+                                            <li>
+                                                {% if h.state == "stopped" %}
+                                                <h3 style="color:crimson;">ERROR: container is: {{ h.state }}, select "start" </h3>
+                                                {% else %}
+                                                <a href="statemod/restart/{{ h.hostname }}" class="button">Restart</a> &nbsp;
+                                                {% endif %}
+                                                <a href="#close" class="button">Cancel</a>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                            </div>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                    <div class="features">
+                        <section>
+                            <span class="icon solid major fa-cog"></span>
+                            <h3>Service Admin Options</h3>
+                            <p></p>
+                            <p>. Container Start</p>
+                            <p>. Container Stop</p>
+                            <p>. Container Restart</p>
+                        </section>
+                    </div>
+                </div>
+            </section>
+{% endblock %}

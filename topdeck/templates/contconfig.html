@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+        <!-- contconfig -->
+        <section id="contconfig" class="wrapper style1 fullscreen fade-up">
+            <div class="inner">
+                <h2>Container Configuration</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Container</th>
+                            <th>IP Address</th>
+                            <th>State</th>
+                            <th>RC.conf</th>
+                            <th>Periodic.conf</th>
+                            <th>Web Terminal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for h in hosts %}
+                        <tr>
+                            <td><code>{{ h.id }}</code></td>
+                            <td>{{ h.hostname }}</td>
+                            <td>{{ h.ipaddress }}</td>
+                            <td>{{ h.state }}</td>
+                            <td><a href="editrc/{{ h.hostname }}#editRCModal" class="button">Edit</a></td>
+                            <td><a href="editperi/{{ h.hostname }}#editPeriModal" class="button">Edit</a></td>
+                            <td><a href="contshell/{{ h.hostname }}" class="button">Connect</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="features">
+                    <section>
+                        <span class="icon solid major fa-cog"></span>
+                        <h3>Config Container Options</h3>
+                        <p></p>
+                    </section>
+                </div>
+            </div>
+        </section>
+{% endblock %}

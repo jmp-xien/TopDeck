@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+            <!-- serverconf -->
+            <section id="serverreset" class="wrapper style1 fullscreen fade-up">
+                <div class="inner">
+                    <h2>TopDeck Panel Reset</h2>
+                    <table>
+                    <thead>
+                        </thead>
+                    <tbody>
+                        <tr>
+                            <th>TopDeck Panel</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Status: Running</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th><br>
+                                <a href="#openModal" class="button">Restart TopDeck</a>
+                            </th>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <div id="openModal" class="modalDialog">
+                            <div>
+                                <a href="#close" title="Close" class="close">X</a>
+                                <form method="post" action="#close">
+                                    <div class="fields">
+                                        <input id="sid" name="sid" required type="hidden" value="1">
+                                        <div class="field half">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p>Reset TopDeck <br>
+                                            Are you sure?</p>
+                                        <ul class="actions">
+                                            <li>
+                                                <input id="submit" name="submit" type="submit" value="Reset TopDeck"> &nbsp;
+                                                <a href="#close" class="button">Cancel</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </tbody>
+                    </table>
+                    <div class="features">
+                        <section>
+                            <span class="icon solid major fa-cog"></span>
+                            <h3>Reset Options</h3>
+                            <p>.</p>
+                            <p>.</p>
+                            <p>.</p>
+                            <p>.</p>
+                        </section>
+                    </div>
+                </div>
+            </section>
+{% endblock %}

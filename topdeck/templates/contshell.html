@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section id="contshell" class="wrapper style1 fullscreen fade-up">
+        <div class="inner">
+            <h3>Terminal Access In Container: &nbsp; {{ cont.hostname }}</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pop-Up Shell</th>
+                        <th>Install Shell</th>
+                        <th>State</th>
+                        <th>Start</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#" class="button" onclick="openWin()">Pop-Up</a></td>
+                        <td><a href="#addShellModal" class="button">Install</a></td>
+                        <td><b>{{ cont.state }}</b></td>
+                        <td><a href="#contStateModal" class="button">Start</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="pass">
+                <h4>Container Terminal: {{ cont.hostname }}</h4>
+                {% if cont.state == "stopped" %}
+                <h3 style="color:crimson;">ERROR: container must be "running" to access Web Shell.</h3>
+                {% else %}
+                <iframe class="webshell" src=" http://{{ cont.ipaddress }}:4200" width="100%" height="500px"></iframe>
+                {% endif %}
+            </div>
+            <script type="text/javascript">
+            function openWin() {
+                var divText = document.getElementById("pass").outerHTML;
+                var myWindow = window.open('', '', 'width=900,height=600');
+                var doc = myWindow.document;
+                doc.open();
+                doc.write(divText);
+                doc.close();
+            }
+            </script>
+            <div id="addShellModal" class="modalDialog">
+                <div>
+                    <a href="#close" title="Close" class="close">X</a>
+                    <form method="post" action="#close">
+                        <h3>Add Terminal To Container: &nbsp; {{ cont.hostname }}</h3>
+                        <p>Are you sure?</p>
+                        <br />
+                        <div class="fields">
+                            <div class="field half">
+                                {{ form.contservice(value='shellinabox') }}
+                                {{ form.contsvcstatus(value='installed') }}
+                            </div>
+                            <div style="margin-left:30px;">
+                                <ul class="actions">
+                                    <li>
+                                        {% if cont.state == "stopped" %}
+                                        <h3 style="color:crimson;">ERROR: container must be "running" to install Shell.</h3>
+                                        {% else %}
+                                        {{ form.submit(onclick="change()") }} &nbsp; &nbsp;
+                                        {% endif %}
+                                        <a href="#close" class="button">Cancel</a>
+                                    </li>
+                                </ul>
+                                <script type="text/javascript">
+                                    function change() {
+                                        var btn = document.getElementById("submit");
+                                        btn.value = 'Please Wait...';
+                                        btn.innerHTML = '<span style="background-color: salmon">Please Wait...</span>';
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="contStateModal" class="modalDialog">
+                <div>
+                    <a href="#close" title="Close" class="close">X</a>
+                    <form method="post" action="#close">
+                        <h3>Start Container: &nbsp; {{ cont.hostname }}</h3>
+                        <p>Are you sure?</p>
+                        <ul class="actions">
+                            <li>
+                                {% if cont.state == "stopped" %}
+                                <a href="/statemod/start/{{ cont.hostname }}" class="button">Start</a>
+                                {% else %}
+                                <h3 style="color:crimson;">ERROR: container already in "running" state.</h3>
+                                {% endif %}
+                                &nbsp; &nbsp; <a href="#close" class="button">Cancel</a>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

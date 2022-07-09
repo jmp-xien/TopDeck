@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block content %}
+            <!-- contupdate -->
+            <section id="contupdate" class="wrapper style1 fullscreen fade-up">
+                <div class="inner">
+                    <h2>Update Containers</h2>
+                    <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Host Name</th>
+                            <th>IP Address</th>
+                            <th>Ethernet</th>
+                            <th>State</th>
+                            <th>  &nbsp; Edit</th>
+                            <th>  &nbsp; Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for h in hosts %}
+                        <tr>
+                            <td><code>{{ h.id }}</code></td>
+                            <td>{{ h.hostname }}</td>
+                            <td>{{ h.ipaddress }}</td>
+                            <td>{{ h.ethernet }}</td>
+                            <td>{{ h.state }}</td>
+                            <td><a href="#editModal{{ h.id }}" class="button">Edit</a></td>
+                            <td><a href="#delModal{{ h.id }}"  class="button">Delete</a></td>
+                        </tr>
+                        <tr></tr>
+                        <tr></tr>
+                        <tr></tr>
+                        <tr>                            
+                            <div id="editModal{{ h.id }}" class="modalDialog">
+                                <div>
+                                    <a href="#close" title="Close" class="close">X</a>
+                                    <form method="post" action="#close">
+                                        <h3>Editing Container: &nbsp; {{ h.hostname }}</h3>
+                                        <div class="fields">
+                                            {{ form.cid(value=h.id) }}
+                                            <div class="field half">
+                                                {{ form.hostname.label }}
+                                                {{ form.hostname(value=h.hostname) }}
+                                            </div>
+                                            <div class="field half">
+                                                {{ form.ipaddress.label }}
+                                                {{ form.ipaddress(value=h.ipaddress) }}
+                                            </div>
+                                            <div>
+                                                {{ form.ethernet.label }}
+                                                <select name="ethernet" id="ethernet">
+                                                    <option value="{{h.ethernet}}" selected>{{h.ethernet}}</option>
+                                                    <option value="">-- Select Different Interface --</option>{% for ec in eths %}
+                                                    <option value="{{ ec }}">{{ ec }}</option>{% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="field half">
+                                                {{ form.options.label }}
+                                                {{ form.options(value=h.options) }}
+                                            </div>
+                                        </div><br>
+                                            <ul class="actions">
+                                                <li>
+                                                    {% if h.state == "running" %}
+                                                    <h3 style="color:crimson;">ERROR: container must be stopped to edit</h3>
+                                                    {% else %}
+                                                    {{ form.submit }} &nbsp;
+                                                    {% endif %}
+                                                    <a href="#close" class="button">Cancel</a>
+                                                </li>
+                                            </ul>
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="delModal{{ h.id }}" class="modalDialog">
+                                <div>
+                                    <a href="#close" title="Close" class="close">X</a>
+                                    <form method="post" action="#close">
+                                        <div class="fields">
+                                            <div class="field half">
+                                                <h3>Deleting Container: &nbsp; {{ h.hostname}}</h3>
+                                                <h4>Are you sure?</h4>
+                                            </div>
+                                        </div><br>
+                                        <ul class="actions">
+                                            <li>
+                                                {% if h.state == "running" %}
+                                                <h3 style="color:crimson;">ERROR: container must be stopped to delete</h3>
+                                                {% else %}
+                                                <a href="contdel/{{ h.hostname }}" class="button">Delete</a> &nbsp;
+                                                {% endif %}
+                                                <a href="#close" class="button">Cancel</a>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                            </div>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                    <div class="features">
+                        <section>
+                            <span class="icon solid major fa-cog"></span>
+                            <h3>Update Options</h3>
+                            <p></p>
+                            <p>. Host Name </p>
+                            <p>. IP Address</p>
+                            <p>. Ethernet</p>
+                        </section>
+                    </div>
+                </div>
+            </section>
+{% endblock %}

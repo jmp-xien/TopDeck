@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+            <!-- editrc -->
+            <section id="editperi" class="wrapper style1 fullscreen fade-up">
+                <div class="inner">
+                    <h3>Editing 'periodic.conf' File For Container: {{ hname }}</h3>
+                    <p>CAUTION:<br>
+                        An incorrect periodic.conf option may prevent Container's optimum performance.
+                        Ensure to know what config change does to Container or simply leave default options.</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Host Name</th>
+                                <th>Edit Periodic Conf</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>1</code></td>
+                                <td><code>{{ hname }}</code></td>
+                                <td><a href="#editPeriModal" class="button">Edit</a></td>
+                            </tr>
+                            <tr></tr>
+                            <tr></tr>
+                            <tr></tr>
+                            <div id="editPeriModal" class="modalDialog">
+                                <div>
+                                    <a href="/contconfig" title="Close" class="close">X</a>
+                                    <form method="post" action="#close">
+                                        <div class="fields">
+                                                {{ form.peridata.label }}
+                                                Editing periodic.conf file for container: {{hname}} <br />
+                                                incorrect options may effect container performance!
+                                                {{ form.peridata(rows='15', cols='100') }}
+                                        </div><br />
+                                        <ul class="actions">
+                                            <li>
+                                                {{ form.submit }} &nbsp;
+                                                <a href="/contconfig" class="button">Cancel</a>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                            </div>
+                        </tbody>
+                    </table>
+                    <div class="features">
+                        <section>
+                            <span class="icon solid major fa-cog"></span>
+                            <h3>Edit Periodic Configuration Options</h3>
+                            <p></p>
+                            <p></p>
+                            <p>.</p>
+                            <p>Select Edit</p>
+                            <p>Edit periodic.conf File</p>
+                            <p>Update File</p>
+                            <p>Cancel to stop file update</p>
+                        </section>
+                    </div>
+                </div>
+            </section>
+{% endblock %}

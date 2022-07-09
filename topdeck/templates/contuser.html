@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% block content %}
+            <!-- contuser -->
+            <section id="contuser" class="wrapper style1 fullscreen fade-up">
+                <div class="inner">
+                    <h2>Users In Container: &nbsp; {{ contq.hostname }}</h2>
+                    <h4>Container State: &nbsp; <span style="color:rgb(240, 155, 155);">{{ contq.state }}</span></h4>
+                    {% if contq.state == "stopped" %}(Container must be running to edit users){% endif %}
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>User Name</th>
+                                <th>User Status</th>
+                                <th>Container</th>
+                                <th> &nbsp; Password Reset</th>
+                                <th> &nbsp; Delete User</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for u in cousers %}
+                            <tr>
+                                <td><code>{{ u.id }}</code></td>
+                                <td>{{ u.contuser }}</td>
+                                <td>active</td>
+                                <td>{{ u.container.hostname }}</td>
+                                <td><a href="#resetpwModal{{ u.id }}" class="button">Reset</a></td>
+                                <td><a href="#deluserModal{{ u.id }}" class="button">Delete</a></td>
+                            </tr>
+                            <tr>
+                                <div id="resetpwModal{{ u.id }}" class="modalDialog">
+                                    <div>
+                                        <a href="#close" title="Close" class="close">X</a>
+                                        <form method="post" action="#close">
+                                            <h3>Reset Password For: &nbsp; {{ u.contuser }} &nbsp; In: &nbsp; {{ contq.hostname }}</h3>
+                                            <div class="fields">
+                                                <div class="field half">
+                                                    {{ form.cuid(value=u.id) }}
+                                                    {{ form.contoption(value='reset') }}
+                                                    {{ form.contusrstat(value='active') }}
+                                                    {{ form.contuser.label }}
+                                                    {{ form.contuser(value=u.contuser, readonly=true) }}
+                                                    {{ form.contuserpwd.label }}
+                                                    {{ form.contuserpwd(onkeyup='check();') }}
+                                                    {{ form.contuserpwd_conf.label }}
+                                                    {{ form.contuserpwd_conf(onkeyup='check();') }}
+                                                    <span id='message'></span>
+                                                </div><br />
+                                                <ul class="actions">
+                                                    <li>
+                                                        {% if contq.state == "stopped" %}
+                                                        <h3 style="color:crimson;">ERROR: container must be "running" to reset password.</h3>
+                                                        {% else %}
+                                                        {{ form.submit(value='reset') }} &nbsp; &nbsp;
+                                                        {% endif %}
+                                                        <a href="#close" class="button submit">Cancel</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div id="deluserModal{{ u.id }}" class="modalDialog">
+                                    <div>
+                                        <a href="#close" title="Close" class="close">X</a>
+                                        <form method="post" action="#close">
+                                            <h3>Delete User: &nbsp; {{ u.contuser }} &nbsp; In: {{ contq.hostname }}</h3>
+                                            <h3>Are you sure?</h3>
+                                            <div class="fields">
+                                                <div class="field half">
+                                                    {{ form.cuid(value=u.id) }}
+                                                    {{ form.contoption(value='delete') }}
+                                                    {{ form.contuser(value=u.contuser, readonly=true) }}
+                                                </div><br />
+                                                <ul class="actions">
+                                                    <li>
+                                                        {% if contq.state == "stopped" %}
+                                                        <h3 style="color:crimson;">ERROR: container must be "running" to delete user.</h3>
+                                                        {% else %}
+                                                        {{ form.submit(value='Delete') }} &nbsp; &nbsp;
+                                                        {% endif %}
+                                                        <a href="#close" class="button submit">Cancel</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Add New User To Container</th>
+                                <th>Back To Admin Page</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="#adduserModal" class="button">Add New User</a></td>
+                                <td><a href="/#one" class="button">Go To Page</a></td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+
+                            <div id="adduserModal" class="modalDialog">
+                                <div>
+                                    <a href="#close" title="Close" class="close">X</a>
+                                    <form method="post" action="#close">
+                                        <h3>Add New User To Container: &nbsp; {{ contq.hostname }}</h3>
+                                        <div class="fields">
+                                            <div class="field half">
+                                                {{ form.contoption(value='add') }}
+                                                {{ form.contusrstat(value='active') }}
+                                                {{ form.contuser.label }}
+                                                {{ form.contuser }}
+                                                {{ form.contuserpwd.label }}
+                                                {{ form.contuserpwd(onkeyup='check();') }}
+                                                {{ form.contuserpwd_conf.label }}
+                                                {{ form.contuserpwd_conf(onkeyup='check();') }}
+                                                <span id='message'></span>
+                                            </div><br />
+                                            <ul class="actions">
+                                                <li>
+                                                    {% if contq.state == "stopped" %}
+                                                    <h3 style="color:crimson;">ERROR: container must be "running" to add user.</h3>
+                                                    {% else %}
+                                                    {{ form.submit(value='Add User') }} &nbsp; &nbsp;
+                                                    {% endif %}
+                                                    <a href="#close" class="button">Cancel</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </tbody>
+                    </table>
+                    <div class="features">
+                        <section>
+                            <span class="icon solid major fa-cog"></span>
+                            <h3>Edit Services Options</h3>
+                            <p></p>
+                            <p>.</p>
+                        </section>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    var check = function() {
+                        if (document.getElementById('contuserpwd').value ==
+                            document.getElementById('contuserpwd_conf').value) {
+                            document.getElementById('message').style.color = 'green';
+                            document.getElementById('message').innerHTML = 'matching';
+                        } else {
+                                document.getElementById('message').style.color = 'red';
+                            document.getElementById('message').innerHTML = 'not matching';
+                        }
+                    }
+                </script>
+            </section>
+{% endblock %}

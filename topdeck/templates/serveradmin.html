@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% block content %}
+            <!-- serveradmin -->
+            <section id="serveradmin" class="wrapper style1 fade-up">
+                <div class="inner">
+                    <h2>TopDeck Server Cluster</h2>
+                    <h3>Manage Multiple Container Servers</h3>
+                    <p></p>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Server Name</th>
+                            <th>Server IP</th>
+                            <th>Port</th>
+                            <th>TopDeck Panel</th>
+                            <th>Edit Host</th>
+                            <th>Remove Host</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for h in hosts %}
+                            <tr>
+                                <td>{{ h.id }}</td>
+                                <td>{{ h.hostname }}</td>
+                                <td>{{ h.daship }}</td>
+                                <td>{{ h.dashport }}</td>
+                                {% if h.id == 1 %}
+                                <td><a href="#" class="button">Connect</a></td>
+                                {% else %}
+                                <td><a href="http://{{ h.daship }}:{{ h.dashport }}/" target="_blank" class="button submit">Connect</a></td>
+                                {% endif %}
+                                <td><a href="#editModal{{ h.id }}" class="button">Edit</a></td>
+                                <td><a href="#remModal{{ h.id }}" class="button">Remove</a></td>
+                            </tr>
+                            <tr>
+                                <div id="editModal{{ h.id }}" class="modalDialog">
+                                    <div>
+                                        <a href="#close" title="Close" class="close">X</a>
+                                        <form method="post" action="#close">
+                                            <h3>Update Server: &nbsp; <span style="color:crimson;"> {{ h.hostname }}</span></h3>
+                                            <div class="fields">
+                                                <div class="field half">
+                                                    {{ form.sid(value=h.id) }}
+                                                    {{ form.hostname.label }}
+                                                    {{ form.hostname(value=h.hostname) }}
+                                                    {{ form.daship.label }}
+                                                    {{ form.daship(value=h.daship) }}
+                                                    {{ form.dashport.label }}
+                                                    {{ form.dashport(value=h.dashport) }}
+                                                    {{ form.dnsip.label }}
+                                                    {{ form.dnsip(value=h.dnsip) }}
+                                                </div>
+                                            </div>
+                                            <p></p>
+                                            <ul class="actions">
+                                                <li>
+                                                    {% if h.id == 1 %}
+                                                    <h4 style="color:crimson;">Edit host via Server Admin</h4>
+                                                    {% else %}
+                                                    <a href="serveredit/{{ h.hostname }}/{{ h.id }}" class="button">Delete</a> &nbsp;
+                                                    {% endif %}
+                                                    <a href="#close" class="button">Cancel</a>
+                                                </li>
+                                            </ul>
+                                        </form>
+                                    </div>
+                                </div>
+                            </tr>
+                            <tr>
+                                <div id="remModal{{ h.id }}" class="modalDialog">
+                                    <div>
+                                        <a href="#close" title="Close" class="close">X</a>
+                                        <form method="post" action="#close">
+                                            <h3>Remove Server From Cluster: &nbsp; <span style="color:crimson;"> {{ h.hostname }}</span></h3>
+                                            <p>Are you sure?</p>
+                                            <ul class="actions">
+                                                <li>
+                                                    {% if h.id == 1 %}
+                                                    <h4 style="color:crimson;">Master Host Cannot Be Removed</h4>
+                                                    {% else %}
+                                                    <a href="serverrem/{{ h.hostname }}/{{ h.id }}" class="button">Delete</a> &nbsp;
+                                                    {% endif %}
+                                                    <a href="#close" class="button">Cancel</a>
+                                                </li>
+                                            </ul>
+                                        </form>
+                                    </div>
+                                </div>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <div id="addServerModal" class="modalDialog">
+                                    <div>
+                                        <a href="#close" title="Close" class="close">X</a>
+                                        <h3>New Server Setup</h3>
+                                        <form method="post" action="#close">
+                                            <div class="fields">
+                                                <div class="field half">
+                                                    {{ form.hostname.label }}
+                                                    {{ form.hostname }}
+                                                    {{ form.daship.label }}
+                                                    {{ form.daship }}
+                                                    {{ form.dashport.label }}
+                                                    {{ form.dashport }}
+                                                    {{ form.basedir.label }}
+                                                    {{ form.basedir }}
+                                                    {{ form.logdir.label }}
+                                                    {{ form.logdir }}
+                                                    {{ form.contdir.label }}
+                                                    {{ form.contdir }}
+                                                    {{ form.dnsip.label }}
+                                                    {{ form.dnsip }}
+                                                    {{ form.domain.label }}
+                                                    {{ form.domain }}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <p></p>
+                                                <ul class="actions">
+                                                    <li>
+                                                        {{ form.submit }} &nbsp;
+                                                        <a href="#close" class="button">Cancel</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </tr>
+                            <tr>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <h4>Add Server To Cluster</h4>
+                        <ul class="actions">
+                            <li>
+                                <a href="#addServerModal" class="button">Add Server</a> &nbsp;
+
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="features">
+                        <section>
+                            <span class="icon solid major fa-cog"></span>
+                            <h3>Reset Options</h3>
+                            <p>.</p>
+                            <p>.</p>
+                            <p>.</p>
+                            <p>.</p>
+                        </section>
+                    </div>
+                </div>
+            </section>
+{% endblock %}

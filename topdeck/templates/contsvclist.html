@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% block content %}
+            <!-- contsvce -->
+            <section id="contsvce" class="wrapper style1 fullscreen fade-up">
+                <div class="inner">
+                    <h2>Services In Container: &nbsp; {{ contq.hostname }}</h2>
+                    <h4>Container State: &nbsp; <span style="color:rgb(240, 155, 155);">{{ contq.state }}</span></h4>
+                    {% if contq.state == "stopped" %}(Container must be running to edit services){% endif %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Service</th>
+                                <th>Status</th>
+                                <th> &nbsp; Enable</th>
+                                <th> &nbsp; Disable</th>
+                                <th> &nbsp; Uninstall</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for s in cosrvces %}
+                            <tr>
+                                <td><code>{{ s.id }}</code></td>
+                                <td>{{ s.contservice }}</td>
+                                <td>{{ s.contsvcstatus }}</td>
+                                {% if s.contsvcstatus == "enabled" %}
+                                <td><a href="#" class="button">Enable</a></td>
+                                <td><a href="#disableModal{{ s.id }}" class="button">Disable</a></td>
+                                {% else %}
+                                <td><a href="#enableModal{{ s.id }}" class="button">Enable</a></td>
+                                <td><a href="#" class="button">Disable</a></td>
+                                {% endif %}
+                                <td><a href="#uninstModal{{ s.id }}" class="button">Uninstall</a></td>
+                            </tr>
+                            <div id="enableModal{{ s.id }}" class="modalDialog">
+                                <div>
+                                    <a href="#close" title="Close" class="close">X</a>
+                                    <form method="post" action="#close">
+                                        <h3>Enable Service: &nbsp; {{ s.contservice }}</h3>
+                                        <p>Are you sure?</p>
+                                        <ul class="actions">
+                                            <li>
+                                                {% if contq.state == "stopped" %}
+                                                <h3 style="color:crimson;">ERROR: container must be "running" to enable service.</h3>
+                                                {% else %}
+                                                <a href="/contsvcmod/enable/{{ contq.hostname }}/{{ s.id }}" class="button">Enable Service</a> &nbsp;
+                                                {% endif %}
+                                                <a href="#close" class="button">Cancel</a>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="disableModal{{ s.id }}" class="modalDialog">
+                                <div>
+                                    <a href="#close" title="Close" class="close">X</a>
+                                    <form method="post" action="#close">
+                                        <h3>Disable service: &nbsp; {{ s.contservice }}</h3>
+                                        <p>Are you sure?</p>
+                                        <ul class="actions">
+                                            <li>
+                                                {% if contq.state == "stopped" %}
+                                                <h3 style="color:crimson;">ERROR: container must be "running" to disable service.</h3>
+                                                {% else %}
+                                                <a href="/contsvcmod/disable/{{ contq.hostname }}/{{ s.id }}" class="button">Disable Service</a> &nbsp;
+                                                {% endif %}
+                                                <a href="#close" class="button">Cancel</a>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="uninstModal{{ s.id }}" class="modalDialog">
+                                <div>
+                                    <a href="#close" title="Close" class="close">X</a>
+                                    <form method="post" action="#close">
+                                        <h3>Uninstall Service: &nbsp; {{ s.contservice }}</h3>
+                                        <p>{{ s.contservice }}: will be stopped and removed<br />
+                                            Are you sure?</p>
+                                        <ul class="actions">
+                                            <li>
+                                                {% if contq.state == "stopped" %}
+                                                <h3 style="color:crimson;">ERROR: container must be "running" to uninstall service.</h3>
+                                                {% else %}
+                                                <a href="/contsvcmod/uninst/{{ contq.hostname }}/{{ s.id }}" class="button">Uninstall Service</a> &nbsp;
+                                                {% endif %}
+                                                <a href="#close" class="button">Cancel</a>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </tbody>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Add New Service To Container</th>
+                                <th>Search Service Packages</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="#addContSvcModal" class="button submit">Add New Service</a></td>
+                                <td><a href="#searchModal" class="button">Search Packages</a></td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <div id="addContSvcModal" class="modalDialog">
+                                <div>
+                                    <a href="#close" title="Close" class="close">X</a>
+                                    <form method="post" action="#close">
+                                        <h3>Add New Service To Container: &nbsp; {{ contq.hostname }}</h3>
+                                        <div class="fields">
+                                            <div class="field half">
+                                                {{ form.contservice.label }}
+                                                {{ form.contservice }}
+                                                {{ form.contsvcstatus(value='installed') }}
+                                            </div><br />
+                                            <ul class="actions">
+                                                <li>
+                                                    {% if contq.state == "stopped" %}
+                                                    <h3 style="color:crimson;">ERROR: container must be "running" to add service.</h3>
+                                                    {% else %}
+                                                    {{ form.submit(class="button", onclick="change()") }} &nbsp; &nbsp;
+                                                    {% endif %}
+                                                    <a href="#close" class="button submit">Cancel</a>
+                                                    <script type="text/javascript">
+                                                        function change() {
+                                                            var btn = document.getElementById("submit");
+                                                            btn.value = 'Please Wait...';
+                                                            btn.innerHTML = '<span style="background-color: salmon">Please Wait...</span>';
+                                                        }
+                                                    </script>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </tbody>
+                    </table>
+                    <div id="searchModal" class="modalDialog">
+                        <div>
+                            <a href="#close" title="Close" class="close"> X </a>
+                            <div>
+                                <p></p>
+                                &nbsp; &nbsp; <a href="#close" class="button submit">Close Search</a><br /><br />
+                            </div>
+                            <form action="https://www.freshports.org/search.php" target="_blank" rel="noopener noreferrer name="f">
+                                Search Container Service Packages:<BR>
+                                <div class="fields">
+                                    <div class="field half">
+                                        {{ form.query(size="10", tabindex=1) }}<br />
+                                        <input name="num"             type="hidden" value="100">
+                                        <input name="stype"           type="hidden" value="name">
+                                        <input name="method"          type="hidden" value="match">
+                                        <input name="deleted"         type="hidden" value="excludedeleted">
+                                        <input name="start"           type="hidden" value="1">
+                                        <input name="casesensitivity" type="hidden" value="caseinsensitive" >
+                                        &nbsp; &nbsp; <input type="submit" value="go" name="search" tabindex=2> &nbsp; &nbsp;
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="features">
+                        <section>
+                            <span class="icon solid major fa-cog"></span>
+                            <h3>Edit Services Options</h3>
+                            <p></p>
+                            <p>.</p>
+                        </section>
+                    </div>
+                </div>
+            </section>
+{% endblock %}

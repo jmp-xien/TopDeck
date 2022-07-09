@@ -1,0 +1,100 @@
+/*
+	Modal Options For:
+    TopDeck by jmp-xien
+*/
+
+.modalDialog {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #2a3991cc;
+    z-index: 99999;
+    opacity:0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+}
+
+.modalDialog:target {
+    opacity:1;
+    pointer-events: auto;
+}
+
+.modalDialog > div {
+    width: 600px;
+    position: relative;
+    margin: 10% auto;
+    padding: 5px 20px 13px 20px;
+    border-radius: 10px;
+    background: rgb(8, 15, 48);
+    background: -moz-linear-gradient(rgb(8, 8, 48), #222);
+    background: -webkit-linear-gradient(rgb(8, 15, 48), #222);
+    background: -o-linear-gradient(rgb(8, 16, 48), #222);
+}
+
+.close {
+    background: #606061;
+    color: #FFFFFF;
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+
+.close:hover { background: #00d9ff; }
+
+
+/* Setup Flash background colors */
+
+.success {
+    padding-left: 10px;
+    background-color: #0a4b1d;
+}
+
+.error {
+    padding-left: 10px;
+    background-color: #852305;
+}
+
+.fatal {
+    padding-left: 10px;
+    background-color: #610a0a;
+}
+
+/* AutoHide Flash message after 15 sec */
+#autoHide {
+    -moz-animation: cssAnimation 0s ease-in 15s forwards;
+    -webkit-animation: cssAnimation 0s ease-in 15s forwards;
+    -o-animation: cssAnimation 0s ease-in 15s forwards;
+    animation: cssAnimation 0s ease-in 15s forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+@keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        overflow:hidden;
+    }
+}
+@-webkit-keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        visibility:hidden;
+    }
+}

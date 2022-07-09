@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block content %}
+            <!-- userupdate -->
+            <section id="userupdate" class="wrapper style1 fullscreen fade-up">
+                <div class="inner">
+                    <h2>Update User</h2>
+                    <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Is Admin</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for u in users %}
+                        <tr>
+                            <td><code>{{ u.id }}</code></td>
+                            <td>{{ u.username }}</td>
+                            <td>{{ u.email }}</td>
+                            <td>{{ u.admin }}</td>
+                            <td><a href="#editModal{{ u.id }}" class="button submit">Edit</a></td>
+                            <td><a href="#delModal{{ u.id }}" class="button submit">Delete</a></td>
+                        </tr>
+                        <tr></tr>
+                        <tr></tr>
+                        <tr></tr>
+                            <div id="editModal{{ u.id }}" class="modalDialog">
+                                <div>
+                                    <a href="#close" title="Close" class="close">X</a>
+                                    <form method="post" action="#close"  onsubmit="return validatePassword()">
+                                        <div class="fields">
+                                            {{ form.uid(value=u.id) }}
+                                            <div class="field half">
+                                                {{ form.username.label }}
+                                                {{ form.username(value=u.username, readonly=true) }}
+                                            </div>
+                                            <div class="field half">
+                                                <small>(password, blank if no change)</small>
+                                                {{ form.password.label }}
+                                                {{ form.password }}
+                                                {{ form.password_confirm.label }}
+                                                {{ form.password_confirm }}
+                                            </div>
+                                            <div class="field half">
+                                                {{ form.email.label }}
+                                                {{ form.email(value=u.email) }}
+                                            </div>
+                                            <div class="field half">
+                                                {{ form.admin.label }}
+                                                <select name="admin" id="admin">
+                                                    <option value="{{ u.admin }}" selected>{{ u.admin }}</option>
+                                                    <option value="">-- Select User Admin --</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <p></p>
+                                                <ul class="actions">
+                                                    <li>
+                                                        {{ form.submit }} &nbsp;
+                                                        <a href="#close" class="button submit">Cancel</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div id="delModal{{ u.id }}" class="modalDialog">
+                                <div>
+                                    <a href="#close" title="Close" class="close">X</a>
+                                    <form method="post" action="#close">
+                                        <h3>Delete User: {{ u.username }}</h3>
+                                        <p>Are you sure?</p>
+                                        <ul class="actions">
+                                            <li>
+                                                <a href="userdel/{{ u.username }}" class="button">Delete</a> &nbsp;
+                                                <a href="#close" class="button">Cancel</a>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                            </div>
+
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                    <div class="features">
+                        <section>
+                            <span class="icon solid major fa-cog"></span>
+                            <h3>Update Options</h3>
+                            <p></p>
+                            <p>. Password</p>
+                            <p>. Email</p>
+                            <p>. Is Admin</p>
+                            <p>.</p>
+                            <p>.</p>
+                        </section>
+                    </div>
+                </div>
+            </section>
+{% endblock %}

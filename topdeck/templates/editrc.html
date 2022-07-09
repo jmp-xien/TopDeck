@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+            <!-- editrc -->
+            <section id="editrc" class="wrapper style1 fullscreen fade-up">
+                <div class="inner">
+                    <h3>Editing 'rc.conf' File For Container: {{ hname }}</h3>
+                    <p>CAUTION:<br>
+                        An incorrect rc.conf option may cause Container from starting.
+                        Ensure to know what config change does to Container or simply set default options.</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Host Name</th>
+                                <th>Edit RC Conf</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>1</code></td>
+                                <td><code>{{ hname }}</code></td>
+                                <td><a href="#editRCModal" class="button">Edit</a></td>
+                            </tr>
+                            <tr></tr>
+                            <tr></tr>
+                            <tr></tr>
+                            <div id="editRCModal" class="modalDialog">
+                                <div>
+                                    <a href="/contconfig" title="Close" class="close">X</a>
+                                    <form method="post" action="#close">
+                                        <div class="fields">
+                                                {{ form.rccfdata.label }}
+                                                Editing rc.conf file for container: {{hname}} <br />
+                                                Invalid options may prevent container from starting!
+                                                {{ form.rccfdata(rows='10', cols='100') }}
+                                        </div><br />
+                                        <ul class="actions">
+                                            <li>
+                                                {{ form.submit }} &nbsp;
+                                                <a href="/contconfig" class="button">Cancel</a>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                            </div>
+                        </tbody>
+                    </table>
+                    <div class="features">
+                        <section>
+                            <span class="icon solid major fa-cog"></span>
+                            <h3>Edit RC Conf Options</h3>
+                            <p></p>
+                            <p></p>
+                            <p>.</p>
+                            <p>Select Edit</p>
+                            <p>Edit rc.conf File</p>
+                            <p>Update File</p>
+                            <p>Cancel to stop file update</p>
+                        </section>
+                    </div>
+                </div>
+            </section>
+{% endblock %}

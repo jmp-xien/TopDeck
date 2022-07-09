@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- contadd -->
+        <section id="contadd" class="wrapper style1 fade-up">
+            <div class="inner">
+                <h2>Create New Container</h2>
+                <p>Create new containers on the fly with a simple form.</p>
+                <div class="split style1">
+                    <section>
+                        <form method="post" action="">
+                            <div class="fields">
+                                <div class="field half">
+                                    {{ form.hostname.label }}
+                                    {{ form.hostname(size=20) }}
+                                </div>
+                                <div class="field half">
+                                    {{ form.ipaddress.label }}
+                                    {{ form.ipaddress(size=20) }}
+                                </div>
+                                <div class="field select half">
+                                    {{ form.ethernet.label }}
+                                    {{ form.ethernet }}
+                                </div>
+                                <div class="field">
+                                    {{ form.options.label }}
+                                    {{ form.options(rows="2") }}
+                                </div>
+                            </div>
+                            <ul class="actions">
+                                <li>{{ form.submit }}</li>
+                            </ul>
+                        </form>
+                    </section>
+                    <section>
+                        <ul class="contact">
+                            <li>
+                                <h3>Container Name</h3>
+                                <span>This is also the same as <br />
+                                Container Directory<br />
+                                and Hostname without TLD.</span>
+                            </li>
+                            <li>
+                                <h3>IP Address</h3>
+                                <a href="#">Host IP address</a>
+                            </li>
+                            <li>
+                                <h3>Interface</h3>
+                                <span>Select active Net interface</span>
+                            </li>
+                            <li>
+                                <h3>Social</h3>
+                                <ul class="icons">
+                                    <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                                    <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                                    <li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+                                    <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                                    <li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </section>
+{% endblock %}
