@@ -1,6 +1,6 @@
 # TopDeck is provided under the Mozilla Public License Version 2.0
 # All other included code and work is provided under their respective License
-# 
+#
 # TopDeck written by jmp_xien:
 # github.com/jmp_xien
 
@@ -413,10 +413,10 @@ def contuser(cohname, contid):
             pwd2 = str(form.contuserpwd_conf.data)
             if not pwd1 == pwd2:
                 flash('Error: passwords do not match, please retry.', 'error')
-                return redirect('/contuser/' + cohname + '/' + contid)
+                return redirect(url_for('contuser', cohname=cohname, contid=contid))
             if not (pwd1 or pwd2):
                 flash('Error: blank passwords, user access not updated.', 'error')
-                return redirect('/contuser/' + cohname + '/' + contid)
+                return redirect(url_for('contuser', cohname=cohname, contid=contid))
         cp = Container_Proc()
         mod = cp.cont_user_modify(contid, form)
         flash(f'INFO: success, {copt} user "{ cuser }" for container: { cohname }.', 'success')
@@ -462,7 +462,7 @@ def contsvclist(cohname, contid):
             flash(f'INFO: added service { serv } to container { cohname }.', 'success')
         else:
             flash(f'ERROR: service "{ serv }" not added, verify if installed in container { cohname }.', 'error')
-        return redirect('/contsvclist/'+cohname+'/'+contid)
+        return redirect(url_for('contsvclist', cohname=cohname, contid=contid))
     return render_template('contsvclist.html', cosrvces=cosrvces, contq=contq, username=username, form=form, pageli=pageli)
 
 
