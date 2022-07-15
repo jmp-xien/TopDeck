@@ -9,7 +9,6 @@ import os, subprocess, crypt, ast, time
 from werkzeug.utils import secure_filename
 from flask import session, request, flash, url_for, \
     redirect, render_template, Markup, escape
-from simplepam import authenticate
 from flask_bcrypt import Bcrypt
 from topdeck import app, db
 from topdeck.models import User, Container, Server, \
