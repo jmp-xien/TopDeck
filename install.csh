@@ -33,14 +33,14 @@ if ("$rootzfs" == "ROOT" ) then
     # ZFS
     echo "Creating ZFS mounts..."
     zfs create $rootmnt/usr/jails
-    zfs create $rootmnt/usr/flask
+    zfs create $rootmnt/usr/apps
     zfs create $rootmnt/usr/venv
     echo "Created required ZFS mounts..."
     sleep 2
 else
     echo "Creating BSD Directories..."
     mkdir /usr/jails
-    mkdir /usr/flask
+    mkdir /usr/apps
     mkdir /usr/venv
     echo "Created BSD dirs..."
     sleep 2
@@ -111,13 +111,13 @@ mysql -e "create database topdeck"
 
 sleep 2
 mysql topdeck < topdeck.sql
-tar -xvf TopDeck.tar -C /usr/flask/
+tar -xvf TopDeck.tar -C /usr/apps/
 
 # Set-up config files
 set scr_dir = 'template/usr/local/scripts'
 mkdir -p $jl_bsdir/$scr_dir
 
-cd /usr/flask/TopDeck
+cd /usr/apps/TopDeck
 
 echo ''
 echo ">>> Provide a DNS/Name server IP Address <<<"
@@ -171,8 +171,8 @@ echo ''
 echo 'Installation of TopDeck Container Admin Panel is complete!'
 echo 'To change default superuser account admin/Password01, go into TopDeck panel to edit.'
 echo ''
-echo 'Now running TopDeck in debug mode with command $ sudo /usr/flask/TopDeck/python run.py'
-echo 'To run TD in prod mode run command $ sudo /usr/flask/TopDeck/tdctl.csh start'
+echo 'Now running TopDeck in debug mode with command $ sudo /usr/apps/TopDeck/python run.py'
+echo 'To run TD in prod mode run command $ sudo /usr/apps/TopDeck/tdctl.csh start'
 echo 'Starting TopDeck....'
 echo "Running TopDeck Container Admin Panel at http://${hostip}:8001"
 echo ''
