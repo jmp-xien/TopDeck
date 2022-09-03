@@ -1,8 +1,10 @@
-# TopDeck is provided under the Mozilla Public License Version 2.0
-# All other included code and work is provided under their respective License
-# 
-# TopDeck written by jmp_xien:
-# github.com/jmp_xien
+# TopDeck FreeBSD Container/Jail Administration Panel
+
+provided under the Mozilla Public License Version 2.0
+All other included code and work is provided under their respective License
+
+TopDeck written by jmp_xien:
+github.com/jmp_xien
 
 
 TopDeck:
